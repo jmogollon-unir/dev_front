@@ -1,0 +1,211 @@
+.customer-agent {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1100;
+}
+
+.customer-agent-fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #0f766e;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16px 32px rgba(15, 118, 110, 0.28);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.customer-agent-fab:hover {
+  background: #115e59;
+  transform: translateY(-2px);
+}
+
+.customer-agent-fab i {
+  font-size: 1.35rem;
+}
+
+.customer-agent-panel {
+  width: min(380px, calc(100vw - 32px));
+  height: min(620px, calc(100vh - 112px));
+  margin-bottom: 14px;
+  background: #ffffff;
+  border: 1px solid #dbe4ea;
+  border-radius: 12px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22);
+  display: grid;
+  grid-template-rows: auto 1fr auto auto auto;
+  overflow: hidden;
+}
+
+.customer-agent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px;
+  background: #111828;
+  color: #ffffff;
+}
+
+.customer-agent-header strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.agent-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.agent-status span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.agent-status-connected span,
+.agent-status-streaming span {
+  background: #22c55e;
+}
+
+.agent-status-disconnected span {
+  background: #ef4444;
+}
+
+.customer-agent-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.customer-agent-actions button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.customer-agent-messages {
+  padding: 16px;
+  overflow-y: auto;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-message {
+  max-width: 86%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  line-height: 1.45;
+  font-size: 0.92rem;
+  white-space: pre-wrap;
+}
+
+.agent-message-agent {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #17212b;
+}
+
+.agent-message-user {
+  align-self: flex-end;
+  background: #e7f5f3;
+  border-color: #b9ded9;
+  color: #0f3f3a;
+}
+
+.agent-typing {
+  color: #64748b;
+}
+
+.customer-agent-prompts {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid #e5e7eb;
+  overflow-x: auto;
+  background: #ffffff;
+}
+
+.customer-agent-prompts button {
+  flex: 0 0 auto;
+  border: 1px solid #dbe4ea;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #334155;
+  padding: 8px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.customer-agent-form {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  gap: 8px;
+  padding: 14px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.customer-agent-form input {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 0 14px;
+  color: #111827;
+}
+
+.customer-agent-form input:focus {
+  outline: none;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.customer-agent-form button,
+.agent-reconnect {
+  border: none;
+  background: #0f766e;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.customer-agent-form button {
+  border-radius: 50%;
+}
+
+.customer-agent-form button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.agent-reconnect {
+  min-height: 38px;
+}
+
+@media (max-width: 720px) {
+  .customer-agent {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .customer-agent-panel {
+    height: min(560px, calc(100vh - 96px));
+  }
+}
