@@ -6,7 +6,7 @@ export const GATEWAY_URL = import.meta.env.VITE_GATEWAY_URL || "http://localhost
 
 /**
  * @param {string} _service reservado por compatibilidad (ignorado)
- * @param {string} path ruta absoluta del API, ej. /api/v1/tokens
+ * @param {string} path ruta absoluta del API, ej. /api/users/login
  */
 export const buildApiUrl = (_service, path) => {
   const base = GATEWAY_URL.replace(/\/$/, "");

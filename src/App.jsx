@@ -5,7 +5,6 @@ import Header from "./components/Header/Header";
 import HeaderBookDetail from "./components/HeaderBookDetails/HeaderBookDetails";
 import HeaderSearch from "./components/HeaderSearch/HeaderSearch";
 import Footer from "./components/Footer/Footer";
-import CustomerAgent from "./components/CustomerAgent/CustomerAgent";
 import { AuthProvider } from "./context/auth/AuthProvider";
 import { GlobalProvider } from "./context/global/GlobalProvider";
 import { CartProvider } from "./context/cart/CartProvider";
@@ -36,7 +35,6 @@ function AppContent() {
           <HeaderBookDetail />
         ))}
       <AppRoutes />
-      {!hideHeader && <CustomerAgent />}
       {!hideFooter && <Footer />}
     </>
   );

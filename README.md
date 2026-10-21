@@ -1,11 +1,3 @@
-## 🏆 Entregales actividad 1: Desarrollo front-end: SPA con React 
-
-### Enlaces de la entrega  🔗 
-
-#### [Vídeo-memoria](https://alumnosunir-my.sharepoint.com/:v:/g/personal/leonardocashiel2447_comunidadunir_net/IQD_-ymoqmrhTKKjEah7x2OBAVU-v1bTaFLpcCKqH5-KWBI?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=wpDFaR)
-
-#### [URL del proyecto despleago en Vercel](https://unir-software-g18-relatos-papel.vercel.app)
-
 # 📚 Relatos de Papel - E-Commerce de Libros
 
 Plataforma e-commerce moderna para la venta de libros físicos y digitales, desarrollada con **React** y **Vite**, como proyecto del Máster Universitario en Ingeniería de Software y Sistemas Informáticos de UNIR.
@@ -34,13 +26,12 @@ Plataforma e-commerce moderna para la venta de libros físicos y digitales, desa
 
 El front consume **solo** el API Gateway (por defecto `http://localhost:8080`):
 
-- Catálogo y pedidos: `src/services/api.js` → `/api/books`, `/api/orders`
-- Login y perfil: `src/hooks/useLogin.js` → `/api/v1/tokens`, `/api/v1/users/{cif}` vía `src/apiConfig.js`
-- Agente (WebSocket): `src/hooks/useCustomerAgent.js` → `ws://localhost:8080/ws-api/v1/communications/chat`
+- Catálogo y pedidos: `src/services/api.js` → `GET /api/books`, `GET /api/books/{id}`, `POST /api/orders`, `GET /api/orders/user/{userId}`
+- Login: `src/hooks/useLogin.js` → `POST /api/users/login` con `{ username: <CIF>, password: <MD5> }` (vía `src/apiConfig.js`). La respuesta es el perfil del usuario, que se guarda en `localStorage` (`rp_user`) para mantener la sesión.
 
-Copia `FRONT/.env.example` a `.env` y ajusta `VITE_GATEWAY_URL` si tu gateway no está en el puerto 8080.
+Copia `.env.example` a `.env` y ajusta `VITE_GATEWAY_URL` si tu gateway no está en el puerto 8080.
 
-Levanta el stack backend según `../dev_full_stack/README.md` (Docker Compose o microservicios en IDE).
+Levanta el backend según el README de `../dev_full_stack` (MySQL en Docker y Eureka, gateway y microservicios). El gateway permite CORS desde `localhost:5173-5177`.
 
 ## 📁 Estructura del Proyecto
 
@@ -57,11 +48,12 @@ src/
 │ ├── auth/ # Autenticación y usuario
 │ ├── cart/ # Carrito de compras
 │ └── global/ # Estado global (búsqueda)
+├── services/ # Cliente HTTP hacia el API Gateway (api.js)
 ├── hooks/ # Custom hooks
 │ ├── useBook.js # Obtiene detalles de un libro
 │ ├── useBooks.js # Obtiene catálogo de libros
 │ ├── useCart.js # Integración con carrito
-│ └── useLogin.js # Lógica de autenticación
+│ └── useLogin.js # Login (CIF + contraseña) y logout
 ├── pages/ # Páginas de la aplicación
 │ ├── BookDetail/
 │ ├── Cart/
@@ -106,16 +98,10 @@ Code
 
 ### 4. **Autenticación**
 
-- Login con validación
-- Registro de usuarios
-- Sesión persistente
-- Perfil de usuario
-
-### 5. **Agente de atención**
-
-- Chat flotante integrado con el microservicio `communications`
-- Conexión WebSocket por medio del API Gateway
-- Respuestas generadas desde Gemini en el back-end
+- Login con CIF de empresa + contraseña (la contraseña se envía como MD5)
+- Sesión persistente en `localStorage` (sin JWT ni tokens de sesión)
+- Perfil de usuario con sus pedidos
+- Rutas privadas: `/checkout` y `/profile`
 
 ## 🛠️ Instalación y Configuración
 
@@ -127,12 +113,6 @@ Code
 
 ## Clonar repositorio
 
-```bash
-git clone https://github.com/Dreamlocked/UNIR-SOFTWARE-G18-RELATOS-PAPEL.git 
-
-cd UNIR-SOFTWARE-G18-RELATOS-PAPEL
-```
-
 ## Instalar dependencias
 
 ```bash
@@ -141,16 +121,10 @@ npm install
 
 ## Configurar API Gateway
 
-Crear un archivo `.env` local si el Gateway no está en `http://localhost:8080`:
+Crear un archivo `.env` local (puedes copiar `.env.example`) si el Gateway no está en `http://localhost:8080`:
 
 ```bash
-VITE_API_GATEWAY_URL=http://localhost:8080
-```
-
-El agente se conecta a:
-
-```text
-ws://localhost:8080/ws-api/v1/communications/chat
+VITE_GATEWAY_URL=http://localhost:8080
 ```
 
 ## Iniciar servidor de desarrollo

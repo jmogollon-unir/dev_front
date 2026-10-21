@@ -3,25 +3,13 @@ import { mockBooks } from "../utils/mocks/mockBooks";
 
 const PLACEHOLDER_COVER = "https://via.placeholder.com/320x460?text=Relatos+de+Papel";
 
-function getSessionToken() {
-  return localStorage.getItem("rp_session_token");
-}
-
-async function request(path, options = {}, { withSession = false } = {}) {
-  const headers = {
-    "Content-Type": "application/json",
-    ...options.headers
-  };
-  if (withSession) {
-    const opaque = getSessionToken();
-    if (opaque) {
-      headers.Authorization = `Bearer ${opaque}`;
-    }
-  }
-
+async function request(path, options = {}) {
   const response = await fetch(`${GATEWAY_URL}${path}`, {
-    headers,
-    ...options
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers
+    }
   });
 
   if (!response.ok) {
@@ -76,24 +64,20 @@ export async function getBookById(bookId) {
 }
 
 export async function createOrder({ userId, items }) {
-  return request(
-    "/api/orders",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        userId,
-        items: items.map((item) => ({
-          bookId: item.bookId ?? item.id,
-          quantity: item.quantity
-        }))
-      })
-    },
-    { withSession: true }
-  );
+  return request("/api/orders", {
+    method: "POST",
+    body: JSON.stringify({
+      userId,
+      items: items.map((item) => ({
+        bookId: item.bookId ?? item.id,
+        quantity: item.quantity
+      }))
+    })
+  });
 }
 
 export async function getOrdersByUser(userId) {
-  return request(`/api/orders/user/${userId}`, {}, { withSession: true });
+  return request(`/api/orders/user/${userId}`);
 }
 
 export function getFallbackBooks() {
